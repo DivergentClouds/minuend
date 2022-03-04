@@ -1,0 +1,36 @@
+0 <reversal> <deref> <2 bit register id> <deref> <2 bit register id>:
+    subtract the value in the first register from the value in the second
+    register and store in second register (or at the memory location that
+    the second register points to if its deref bit is 1),
+    dereferencing each register if its deref bit is 1
+
+    if reversal bit is 1, each operand is bit-reversed before subtraction,
+    and then the result is bit-reversed before being stored
+
+1 <reversal> <deref> <2 bit register id> <deref> <2 bit register id>:
+    check if the value in the first register (derefrenced if its deref bit
+    is 1 and bit-reversed if the reversal bit is set) is less than or equal
+    to 0, if true jump to the value in the second register (derefrenced if
+    its deref bit is 1)
+
+    only the program counter is modified by this instruction
+
+
+
+Opcodes:
+Sub  - 00
+SubR - 01
+Leq  - 10
+LeqR - 11
+
+Registers:
+r0 - 0 00 
+r1 - 0 01
+r2 - 0 10
+r3 - 0 11
+
+Dereferenced Registers:
+[r0] - 1 00 
+[r1] - 1 01
+[r2] - 1 10
+[r3] - 1 11
