@@ -15,7 +15,12 @@
 
     only the program counter is modified by this instruction
 
+the 4th register is the PC, after the PC is accessed in derefrence mode, it
+    is incrimented by the register-width (i.e. skip 1 byte if 8-bit, 2 bytes
+    if 16-bit), otherwise the PC may be read and written from like any other
+    register.
 
+    The PC is incrimented post-fetch but before execution of the instruction
 
 Opcodes:
 Sub  - 00
@@ -27,10 +32,11 @@ Registers:
 r0 - 0 00 
 r1 - 0 01
 r2 - 0 10
-r3 - 0 11
+pc - 0 11
 
 Dereferenced Registers:
-[r0] - 1 00 
+[r0] - 1 00
 [r1] - 1 01
 [r2] - 1 10
-[r3] - 1 11
+[pc] - 1 11
+
