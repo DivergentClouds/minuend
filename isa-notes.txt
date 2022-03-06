@@ -20,7 +20,9 @@ the 4th register is the PC, after the PC is accessed in derefrence mode, it
     if 16-bit), otherwise the PC may be read and written from like any other
     register.
 
-    The PC is incrimented post-fetch but before execution of the instruction
+    The PC is incremented post-fetch but before execution of the instruction
+
+data is big endian
 
 Opcodes:
 Sub  - 00
@@ -35,8 +37,8 @@ r2 - 0 10
 pc - 0 11
 
 Dereferenced Registers:
-[r0] - 1 00
-[r1] - 1 01
-[r2] - 1 10
-[pc] - 1 11
+(r0) - 1 00
+(r1) - 1 01
+(r2) - 1 10
+(pc) - 1 11
 
