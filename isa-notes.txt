@@ -22,7 +22,7 @@ the 4th register is the PC, after the PC is accessed in derefrence mode, it
 
     The PC is incremented post-fetch but before execution of the instruction
 
-data is big endian
+data is little endian
 
 Opcodes:
 Sub  - 00
