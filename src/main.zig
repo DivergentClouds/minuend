@@ -1,21 +1,28 @@
 const std = @import("std");
+const fs = std.fs;
 
-const sixty_hz = 500; // 2Mhz
-
+const clock_speed = 500; // 2Mhz
+const memory_size = 65536; // number of values a 16-bit integer can hold
 
 pub fn main() !void {
-    var memory : [65536]u8 = undefined;
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
+    const args = try std.process.argsAlloc(allocator);
+    defer std.process.argsFree(allocator, args);
 
+    var memory = try fs.cwd().readFileAlloc(allocator, args[1], memory_size);
+    defer allocator.free(memory);
+    
     // 4th register is pc
     var registers : [4]u16 = .{undefined, undefined, undefined, 0};
 
     while (true) {
-        cycle(&registers, &memory);
-        std.time.sleep(sixty_hz);
+        cycle(&registers, memory);
+        std.time.sleep(clock_speed);
     }
 }
 
-fn cycle(reg : *[4]u16, mem : *[65536]u8) void {
+fn cycle(reg : *[4]u16, mem : []u8) void {
     var r : [4]u16 = reg.*;
     var loc = mem[r[3]];
     var do_src_deref : bool = undefined;
@@ -65,9 +72,7 @@ fn cycle(reg : *[4]u16, mem : *[65536]u8) void {
     }
 }
 
-fn load(do_deref : bool, reg : u2, r : [4]u16, memory : *[65536]u8) u16 {
-    var mem : [65536]u8 = memory.*;
-
+fn load(do_deref : bool, reg : u2, r : [4]u16, mem : []u8) u16 {
     if (do_deref) {
         return mem[r[reg]] + (mem[r[reg + 1] << 8]);
     } else {
@@ -75,9 +80,8 @@ fn load(do_deref : bool, reg : u2, r : [4]u16, memory : *[65536]u8) u16 {
     }
 }
 
-fn store(do_deref : bool, value : u16, reg : u2, registers : *[4]u16, memory : *[65536]u8) void {
+fn store(do_deref : bool, value : u16, reg : u2, registers : *[4]u16, mem : []u8) void {
     var r : [4]u16 = registers.*;
-    var mem : [65536]u8 = memory.*;
 
     if (do_deref) {
         mem[r[reg]] = @truncate(u8, value);
