@@ -1,6 +1,5 @@
 const std = @import("std");
 const fs = std.fs;
-const writer = std.io.getStdOut().writer();
 
 const clock_speed = 500; // 2Mhz
 const memory_size = 0x10000; // number of values a 16-bit integer can hold
@@ -106,7 +105,7 @@ fn load(do_deref : bool, reg : u2, r : *[4]u16, mem : []u8) !u16 {
 fn store(do_deref : bool, value : u16, reg : u2, r : *[4]u16, mem : []u8) !void {
     if (do_deref) {
         if (r[reg] == 0xffff) {
-            try writer.writeByte(@truncate(u8, std.mem.nativeToLittle(u16, value))); // write LSB to stdout
+            try std.io.getStdOut().writer().writeByte(@truncate(u8, std.mem.nativeToLittle(u16, value))); // write LSB to stdout
         } else {
             mem[r[reg]] = @truncate(u8, value);
             mem[r[reg] + 1] = @truncate(u8, value >> 8);
