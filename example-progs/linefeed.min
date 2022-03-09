@@ -1,0 +1,15 @@
+sub     r0,     r0      ; zero out general purpose registers
+sub     r1,     r1
+sub     r2,     r2
+
+sub     (pc),   r0      ; store -'\n' in r0
+; '\n'
+.obyte  012 000         ; pseudo-op for octal data
+
+sub     (pc),   r1      ; -1 is write location
+; 1
+.obyte  001 000         ; pseudo-op for octal data
+
+sub     r0,     (r1)    ; write '\n'
+leq     r1,     r1      ; jump to mmio space, halting
+
