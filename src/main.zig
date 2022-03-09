@@ -1,7 +1,6 @@
 const std = @import("std");
 const fs = std.fs;
 const writer = std.io.getStdOut().writer();
-var reader = std.io.bufferedReader(std.io.getStdIn().reader());
 
 const clock_speed = 500; // 2Mhz
 const memory_size = 0x10000; // number of values a 16-bit integer can hold
@@ -92,7 +91,7 @@ fn load(do_deref : bool, reg : u2, r : *[4]u16, mem : []u8) !u16 {
         if (r[reg] == 0xffff) {
             temp = 0;
         } else if (r[reg] == 0xfffe) {
-            temp = try reader.reader().readByte();
+            temp = try std.io.getStdIn().reader().readByte();
         } else {
             //std.debug.print("{x}\n", .{mem[r[reg]]});
             temp = @intCast(u16, mem[r[reg]]) + (@intCast(u16, mem[r[reg] + 1]) << 8);
