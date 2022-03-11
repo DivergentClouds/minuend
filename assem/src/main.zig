@@ -71,6 +71,9 @@ fn assemble(source : []u8, buf : []u8) !void {
                             return err;
                     };
                     byte += reg << 3;
+                } else {
+                    std.log.err("Line {d}: not enough arguments", .{line_number});
+                    return error.notEnoughTokens;
                 }
 
                 if (tokens.next()) |token_arg| {
@@ -79,6 +82,9 @@ fn assemble(source : []u8, buf : []u8) !void {
                             return err;
                     };
                     byte += reg;
+                } else {
+                    std.log.err("Line {d}: not enough arguments", .{line_number});
+                    return error.notEnoughTokens;
                 }
 
                 if (tokens.next()) |token_extra| {
