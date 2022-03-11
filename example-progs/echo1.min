@@ -1,16 +1,16 @@
-sub     r0,     r0      ; zero out general purpose registers
-sub     r1,     r1
-sub     r2,     r2
+sub     r0      r0      ; zero out general purpose registers
+sub     r1      r1
+sub     r2      r2
  
-sub     (pc),   r0      ; -2 for reads
+sub     (pc)    r0      ; -2 for reads
 ; 2
 .obyte  002 000         ; pseudo-op for octal data
  
-sub     (pc),   r1      ; -1 for writes and jumps
+sub     (pc)    r1      ; -1 for writes and jumps
 ; 1 
 .obyte  001 000         ; pseudo-op for octal data
  
-sub     (r0),   r2      ; read a byte into r2
-sub     r2,     (r1);   ; write that byte
-leq     r1,     r1      ; quit
+sub     (r0)    r2      ; read a byte into r2
+sub     r2      (r1);   ; write that byte
+leq     r1      r1      ; quit
  
