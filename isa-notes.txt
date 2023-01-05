@@ -15,14 +15,14 @@
 
     only the program counter is modified by this instruction
 
-the 4th register is the PC, after the PC is accessed in derefrence mode, it
-    is incrimented by the register-width (i.e. skip 1 byte if 8-bit, 2 bytes
-    if 16-bit), otherwise the PC may be read and written from like any other
-    register.
+the 4th register is the PC, after an instruction wherethe PC is accessed in
+    derefrence mode, it is incrimented by the register-width (i.e. skip 1 byte
+    if 8-bit, 2 bytes if 16-bit), otherwise the PC may be read and written from
+    like any other register.
 
-    The PC is incremented post-fetch but before execution of the instruction
+The PC is incremented post-fetch but before execution of the instruction
 
-data is little endian
+data is big endian
 
 Opcodes:
 Sub  - 00
